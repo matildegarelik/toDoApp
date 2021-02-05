@@ -1,0 +1,18 @@
+.logo{
+    background-color: blueviolet;
+    font-family: monospace;
+    font-size: 30px;
+    text-align: center;
+}
+footer p{
+    background-color: gray;
+    text-align: center;
+    font-family:cursive;
+}
+.task{
+    border: solid;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: brown;
+    color: burlywood;
+}
