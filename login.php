@@ -1,5 +1,21 @@
 <?php
 session_start();
+if(isset($_POST['username']) && isset($_POST['contraseña'])){
+      include("abrir_conexion.php");
+      $result = mysqli_query($conexion, "SELECT usuario FROM usuarios WHERE usuario = '".$_POST['username']."' AND contraseña =  '".$_POST['contraseña']."';");
+      if(!$result){
+        echo "<h1>Usario no existe</h1>";
+      }else{
+        while($query = mysqli_fetch_array($result))
+        {
+          $_SESSION["esta_logueado"] = true;
+          $_SESSION["usuario"] = $query["usuario"];
+          $_SESSION["usuario_id"] = $query["id"];
+          header('Location:tasks.html');
+          exit;
+        }
+      }
+}
 
 ?>
 
@@ -23,6 +39,7 @@ session_start();
                 <input type="submit" value="Acceder"/>
             </form>
         </div>
+        <div id="msj"></div>
         <div>
             <p>Si no tenes una cuenta, <a href="new_user.php">registrate</a>.</p>
         </div>

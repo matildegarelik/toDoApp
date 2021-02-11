@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>toDoApp - Main page</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="utf-8">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="logo">&ltto do app&gt</div>
+            <h1>To do tasks</h1>
+        </header>
+        <div id="to-do">
+            
+        </div>
+        <button id="new">Agrega una nueva actividad</button>
+        <div id="task-form" style="display: none">
+            <form method="POST">
+                <label for="act">Actividad</label><br>
+                <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
+                <label for="descripcion">Descripción</label><br>
+                <input id="descripcion" name="descripcion" type="text"/><br><br>
+                <label for="prioridad">Prioridad</label><br>
+                <input id="prioridad" name="prioridad" type="number" placeholder="valor entre 1 y 10" required/><br><br>
+                <input id="btn_crear" name="crear" type="submit" value="Crear"/>
+            </form>
+            <button id="hid">↑</button>
+        </div>
+        <div>
+            <a href="login.php">Cerrar sesión</a></p>
+        </div>
+        <footer>
+            <p>by &ltmatilde&gt</p>
+        </footer>
+    </body>
+    <script>
+    $("#new").on("click", function(){
+    $("#task-form").css("display", "block");
+    })
+
+    $("#hid").on("click", function(){
+        $("#task-form").css('display', 'none');
+    })
+
+    function loadTasks(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'existing_tasks.php', true);
+        xhr.onload = function(){
+            if (this.status==200){
+                console.log(this.responseText);
+                var tasks = JSON.parse(this.responseText);
+                var output= '';
+                for (var i in tasks){
+                    output += '<div class="task">' +
+                        '<h2>'+tasks[i].actividad+'</h2><ul>' +
+                        '<li>Descripcion: '+tasks[i].descripcion+'</li>' +
+                        '<li>Prioridad: '+tasks[i].prioridad+'</li>' +
+                        '<li>Fecha: '+tasks[i].fecha+'</li>' +
+                        '<li>Estado: '+tasks[i].estado+'</li>' +
+                        '</ul></div>';
+                }
+                document.getElementById('to-do').innerHTML= output;
+            }
+        }
+        xhr.send()
+    }
+
+    $(document).ready(loadTasks());
+    $('#btn_crear').on('click',  postTask)
+
+    function postTask(e){
+            e.preventDefault();
+            var xhr = new XMLHttpRequest();
+
+            var act = document.getElementById('act').value;
+            var descripcion = document.getElementById('descripcion').value;
+            var prioridad = document.getElementById('prioridad').value;
+            
+            var data = 'act='+act+'&descripcion='+descripcion+'&prioridad='+prioridad;
+
+            xhr.open('POST', 'new_task.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            
+            xhr.onload = function(){
+                console.log(this.responseText);
+            }
+            xhr.send(data);
+            loadTasks();
+        }
+
+    </script>
+</html>

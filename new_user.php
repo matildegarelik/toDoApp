@@ -1,6 +1,29 @@
 <?php
 session_start();
 
+if(isset ($_POST['contraseña']) && ($_POST['contraseña'])==($_POST['confirmar'])){
+    include('abrir_conexion.php');
+    $nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
+    $apellido = mysqli_real_escape_string($conexion, $_POST['apellido']);
+    $email = mysqli_real_escape_string($conexion, $_POST['email']);
+    $usuario = mysqli_real_escape_string($conexion, $_POST['username']);
+    $contraseña = mysqli_real_escape_string($conexion, $_POST['contraseña']);
+
+    $query = "INSERT INTO usuarios(nombre,apellido,email,usuario,contraseña) VALUES('$nombre','$apellido','$email','$usuario','$contraseña')";
+
+    if(mysqli_query($conexion, $query)){
+        header('Location:login.php');
+        echo 'Usuario añadido...';
+        exit;
+
+    }else{
+        echo 'ERROR: '. mysqli_error($conexion);
+    }
+
+}else if (isset ($_POST['contraseña']) && ($_POST['contraseña'])!=($_POST['confirmar'])){
+    echo '<h1>Las contraseñas no coinciden</h1>';
+}
+
 ?>
 
 <html>
