@@ -58,12 +58,12 @@ $(document).ready(function(){
                         span_class = "irrelev";
                     }
                     if (filtro_cg=="Todas"){
-                        output += '<div class="task">' +
+                        output += '<div class="task"><div>' +
                         '<h2>'+tasks[i].actividad+'</h2>' +
                         '<p class=categ>CATEGORÍA: '+tasks[i].categoría+'</p>'+
                         '<p><span class='+span_class+'>'+ pr + 
                         '</span> - '+tasks[i].fecha+' - ' + tasks[i].estado+
-                        '<p class="categ"></p>'+
+                        '<p class="categ"></p></div>'+
                         '<p>'+tasks[i].descripcion+'</p>';
                         if (tasks[i].estado =='Pendiente'){
                             output += '<button class="completar" id='+tasks[i].id+'>Marcar como completada</button>'
@@ -104,7 +104,21 @@ $(document).ready(function(){
     }
 
     $(document).ready(loadTasks());
-    $('#btn_crear').on('click', postTask);
+    $('#btn_crear').on('click', function(){
+        if (!$('#task-form textarea').val()){
+            alert('Completar todos los campos');
+            return false;
+        }
+        $('#task-form input').each(function(){
+            if(!$(this).val()){
+               alert('Completar todos los campos');
+               return false;
+            }else{
+                postTask;
+            }
+        });
+    });
+        
     $('#filtro_categoria').change(loadTasks);
 
     function postTask(e){
