@@ -24,6 +24,7 @@ if(isset($_POST['username']) && isset($_POST['contraseña'])){
         <title>toDoApp - Login</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="utf-8">
+        <link rel="icon" type="image/jpg" href="favicon.jpg">
     </head>
     <body>
         <header>

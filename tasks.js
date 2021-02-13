@@ -57,12 +57,12 @@ $(document).ready(function(){
                     }else{
                         console.log(tasks[i].categoría)
                         if (tasks[i].categoría == filtro_cg){
-                            output += '<div class="task">' +
+                            output += '<div class="task"><div>' +
                             '<h2>'+tasks[i].actividad+'</h2>' +
                             '<p class=categ>CATEGORÍA: '+tasks[i].categoría+'</p>'+
                             '<p><span class='+span_class+'>'+ pr + 
                             '</span> - '+tasks[i].fecha+' - ' + tasks[i].estado+
-                            '<p class="categ"></p>'+
+                            '<p class="categ"></p></div>'+
                             '<p>'+tasks[i].descripcion+'</p>';
                             if (tasks[i].estado =='Pendiente'){
                                 output += '<button class="completar" id='+tasks[i].id+'>Marcar como completada</button>'
@@ -88,26 +88,24 @@ $(document).ready(function(){
         xhr.send()
     }
 
-    $(document).ready(loadTasks());
-    $('#btn_crear').on('click', function(e){
-        if (!$('#task-form textarea').val()){
-            alert('Completar todos los campos');
-            return false;
-        }
-        $('#task-form input').each(function(){
-            if(!$(this).val()){
-               alert('Completar todos los campos');
-               return false;
-            }else{
-                postTask(e);
-            }
-        });
-    });
+    $(document).ready(loadTasks);
+
+    $('#btn_crear').on('click', postTask);
         
     $('#filtro_categoria').change(loadTasks);
 
     function postTask(e){
         e.preventDefault();
+
+        var isValid=true;
+        $(".form-field").each(function() {
+            var element = $(this);
+            if (element.val() == "") {
+            isValid = false;
+            }
+        });
+        if (isValid){
+ 
         var xhr = new XMLHttpRequest();
 
         var act = document.getElementById('act').value;
@@ -132,7 +130,9 @@ $(document).ready(function(){
         $('#categoria').val('');
         $('#prioridad').val('');
         $('#fecha').val('');
-    }
+    }else{
+        alert('Completar todos los campos');
+    }}
 
     $(document).on('click', 'button.completar', function(){
         console.log($(this).attr('class'));

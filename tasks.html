@@ -5,6 +5,7 @@
         <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
         <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href=".\style.css">
+        <link rel="icon" type="image/jpg" href="favicon.jpg">
     </head>
     <body>
         <header>
@@ -28,15 +29,15 @@
             <div id="task-form">
                 <form method="POST">
                     <label for="act">Actividad</label><br>
-                    <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
+                    <input class="form-field" id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
                     <label for="descripcion">Descripción</label><br>
-                    <textarea rows="8" cols="23" id="descripcion" name="descripcion" required></textarea><br><br>
+                    <textarea class="form-field" rows="8" cols="23" id="descripcion" name="descripcion" required></textarea><br><br>
                     <label for="categoria">Categoría</label><br>
-                    <input id="categoria" name="categoria" type="text" required/><br><br>
+                    <input class="form-field" id="categoria" name="categoria" type="text" required/><br><br>
                     <label for="prioridad">Prioridad</label><br>
-                    <input id="prioridad" max="10" min="1" name="prioridad" type="number" placeholder="1-10" required/><br><br>
+                    <input class="form-field" id="prioridad" max="10" min="1" name="prioridad" type="number" placeholder="1-10" required/><br><br>
                     <label for="fecha">Fecha límite</label><br>
-                    <input id="fecha" name="fecha" type="date" required/><br><br>
+                    <input class="form-field" id="fecha" name="fecha" type="date" required/><br><br>
                     <input id="btn_crear" name="crear" type="submit" value="Crear"/>
                 </form>
                 <!--<button id="hid">↑</button>-->

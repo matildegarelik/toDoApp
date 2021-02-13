@@ -28,12 +28,12 @@ div#to-do{
     flex-wrap: wrap;
     flex-direction: row;
     margin: 5px;
+    gap: 10px;
 }
 #to-do > .task{
     border: solid;
-    margin:auto;
+    margin: auto;
     flex: 30%;
-    padding: 10px;
     background-color:whitesmoke;
     height: 250px;
     padding: 5px;
@@ -105,11 +105,12 @@ span.irrelev{
 }
 main{
     display: grid;
-    grid-gap: 20px;
+    grid-gap:30px;
+    grid-template-columns: min-content auto;
 }
 div#right{
-    grid-column: 2/ 4;
-    grid-row: 1
+    grid-column: 2;
+    grid-row: 1;
 
 }
 div#left{

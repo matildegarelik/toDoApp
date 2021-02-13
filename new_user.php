@@ -43,6 +43,7 @@ if(isset ($_POST['contraseña']) && ($_POST['contraseña'])==($_POST['confirmar'
         <title>toDoApp - Register</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="utf-8">
+        <link rel="icon" type="image/jpg" href="favicon.jpg">
     </head>
     <body>
         <header>
