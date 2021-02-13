@@ -41,6 +41,10 @@ div#to-do{
     font-family:fantasy;
     overflow-y: auto;
 }
+.task:hover{
+    transform: scale(1.15);
+    transition: transform 1s ease;
+}
 .task > h2{
     text-align: center;
     background-color: rgb(162, 162, 223, 0.8);
