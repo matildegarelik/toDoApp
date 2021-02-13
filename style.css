@@ -1,18 +1,27 @@
 body{
-    margin: 20px;
+    margin: 10px;
     padding: 25px;
+    font-family: sans-serif;
+    background:rgba(214, 214, 214, 0.8)
+}
+h1, h2, h3, h4, h5, h6{
+    text-transform: none;
 }
 
 .logo{
-    background-color: rgb(177, 226, 43);
+    background-color:  rgb(162, 162, 223, 0.8);
     font-family: monospace;
     font-size: 30px;
     text-align: center;
+    padding: 10px;
+    font-weight: 500;
 }
 footer p{
-    background-color: gray;
+    background-color:  rgb(162, 162, 223, 0.8);
     text-align: center;
-    font-family:cursive;
+    font-family:monospace;
+    padding: 7px;
+    font-size: 15px;
 }
 div#to-do{
     display: flex;
@@ -29,10 +38,12 @@ div#to-do{
     color: burlywood;
     height: 250px;
     padding: 5px;
+    font-family:fantasy;
+    overflow-y: auto;
 }
 .task > h2{
     text-align: center;
-    background-color: rgb(162, 162, 223);
+    background-color: rgb(162, 162, 223, 0.8);
 }
 
 span.imp{
@@ -63,4 +74,22 @@ span.irrelev{
 }
 #user_info > .datos{
     text-align: right;
+    padding: 5px;
+    margin: 5px;
+}
+#logout{
+    padding: 5px;
+    margin: 5px;
+    border: solid red;
+    color: red;
+    background: whitesmoke;
+}
+
+.login-form > form, .register-form > form{
+    width: 20%;
+    margin: auto;
+    background:rgb(162, 162, 223, 0.8);
+    padding: 10px;
+    text-align: center;
+    border: solid 1px;
 }
