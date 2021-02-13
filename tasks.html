@@ -10,11 +10,13 @@
         <header>
             <div class="logo">&ltto do app&gt</div>
             <h1 id="title">To do tasks</h1>
-            <p>Ver <select id="filtro_estado">
+            <p>Ver: <select id="filtro_estado">
                 <option selected>Pendientes</option>
                 <option>Completadas</option>
                 <option>Todas</option>
-            </select></p>
+            </select>
+        <form method="GET"><label for="filtro_categoria">Categoría: </label><input type="text" id="filtro_categoria"/><input type="submit"/></form>
+        </p>
         </header>
         <div id="to-do">
             
@@ -25,11 +27,11 @@
                 <label for="act">Actividad</label><br>
                 <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
                 <label for="descripcion">Descripción</label><br>
-                <input id="descripcion" name="descripcion" type="text"/><br><br>
+                <input id="descripcion" name="descripcion" type="text" required/><br><br>
                 <label for="categoria">Categoría</label><br>
-                <input id="categoria" name="categoria" type="text"/><br><br>
+                <input id="categoria" name="categoria" type="text" required/><br><br>
                 <label for="prioridad">Prioridad</label><br>
-                <input id="prioridad" name="prioridad" type="number" placeholder="valor entre 1 y 10" required/><br><br>
+                <input id="prioridad" max="10" min="1" name="prioridad" type="number" placeholder="valor entre 1 y 10" required/><br><br>
                 <input id="btn_crear" name="crear" type="submit" value="Crear"/>
             </form>
             <!--<button id="hid">↑</button>-->
@@ -82,8 +84,10 @@ $(document).ready(function(){
                     }
                     output += '<div class="task">' +
                         '<h2>'+tasks[i].actividad+'</h2>' +
+                        '<p class=categ>CATEGORÍA: '+tasks[i].categoría+'</p>'+
                         '<p><span class='+span_class+'>'+ pr + 
                         '</span> - '+tasks[i].fecha+' - ' + tasks[i].estado+
+                        '<p class="categ"></p>'+
                         '<p>'+tasks[i].descripcion+'</p>';
                     if (tasks[i].estado =='Pendiente'){
                         output += '<button class="completar" id='+tasks[i].id+'>Marcar como completada</button>'
