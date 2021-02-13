@@ -11,35 +11,38 @@
             <div class="logo">&ltto do app&gt</div>
             <div id='user_info'></div>
             <hr>
+        </header>
+        <main>
+        <div id="right">
             <h2 id="title">To do tasks</h2>
             <p>Estado: <select id="filtro_estado">
                 <option selected>Pendientes</option>
                 <option>Completadas</option>
-                <option>Todas</option>
-            </select>
-            Categoría: <select id="filtro_categoria"><option>Todas</option></select>
-        </p>
-        </header>
-        <div id="to-do">
-            
+                <option>Todas</option></select>
+                Categoría: <select id="filtro_categoria"><option>Todas</option></select>
+            </p>
+            <div id="to-do"></div>
         </div><br><br>
-        <h2>Agrega una nueva actividad<button id="new">↓</button></h2>
-        <div id="task-form" style="display: none">
-            <form method="POST">
-                <label for="act">Actividad</label><br>
-                <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
-                <label for="descripcion">Descripción</label><br>
-                <textarea rows="8" cols="23" id="descripcion" name="descripcion" required></textarea><br><br>
-                <label for="categoria">Categoría</label><br>
-                <input id="categoria" name="categoria" type="text" required/><br><br>
-                <label for="prioridad">Prioridad</label><br>
-                <input id="prioridad" max="10" min="1" name="prioridad" type="number" placeholder="valor entre 1 y 10" required/><br><br>
-                <label for="fecha">Fecha límite</label><br>
-                <input id="fecha" name="fecha" type="date" required/><br><br>
-                <input id="btn_crear" name="crear" type="submit" value="Crear"/>
-            </form>
-            <!--<button id="hid">↑</button>-->
+        <div id="left">
+            <h2>New task</h2>
+            <div id="task-form">
+                <form method="POST">
+                    <label for="act">Actividad</label><br>
+                    <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
+                    <label for="descripcion">Descripción</label><br>
+                    <textarea rows="8" cols="23" id="descripcion" name="descripcion" required></textarea><br><br>
+                    <label for="categoria">Categoría</label><br>
+                    <input id="categoria" name="categoria" type="text" required/><br><br>
+                    <label for="prioridad">Prioridad</label><br>
+                    <input id="prioridad" max="10" min="1" name="prioridad" type="number" placeholder="1-10" required/><br><br>
+                    <label for="fecha">Fecha límite</label><br>
+                    <input id="fecha" name="fecha" type="date" required/><br><br>
+                    <input id="btn_crear" name="crear" type="submit" value="Crear"/>
+                </form>
+                <!--<button id="hid">↑</button>-->
+            </div>
         </div>
+        </main>
         <footer>
             <p>by &ltmatilde&gt</p>
         </footer>

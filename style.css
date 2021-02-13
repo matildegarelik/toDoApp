@@ -93,7 +93,7 @@ span.irrelev{
     margin: 0px;
 }
 .login-form > form, .register-form > form, #task-form > form{
-    width: 20%;
+    width: 225px;
     margin: auto;
     background:rgb(162, 162, 223, 0.8);
     padding: 10px;
@@ -102,4 +102,17 @@ span.irrelev{
 }
 #task-form{
     margin: 10px;
+}
+main{
+    display: grid;
+    grid-gap: 20px;
+}
+div#right{
+    grid-column: 2/ 4;
+    grid-row: 1
+
+}
+div#left{
+    grid-column: 1;
+    grid-row: 1;
 }

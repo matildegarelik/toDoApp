@@ -17,22 +17,7 @@ $(document).ready(function(){
         xhr.send()
     }
     currentUser();
-    
-    $("#new").on("click", function(){
-        if($(this).html()== "↓"){
-            $("#task-form").css("display", "block");
-            $(this).html("↑");
-            $('html,body').animate({
-                scrollTop: $("#new").offset().top}, 'slow');
-        }else{
-            $("#task-form").css("display", "none");
-            $(this).html("↓");
-            $('html,body').animate({
-                scrollTop: $("#user_info").offset().top},'slow');
-        }
-    
-    })
-    
+      
     function loadTasks(){
         var filtro_estado = $('select#filtro_estado').val();
         console.log(filtro_estado);
@@ -104,7 +89,7 @@ $(document).ready(function(){
     }
 
     $(document).ready(loadTasks());
-    $('#btn_crear').on('click', function(){
+    $('#btn_crear').on('click', function(e){
         if (!$('#task-form textarea').val()){
             alert('Completar todos los campos');
             return false;
@@ -114,7 +99,7 @@ $(document).ready(function(){
                alert('Completar todos los campos');
                return false;
             }else{
-                postTask;
+                postTask(e);
             }
         });
     });
@@ -147,7 +132,6 @@ $(document).ready(function(){
         $('#categoria').val('');
         $('#prioridad').val('');
         $('#fecha').val('');
-        $('#new').click();
     }
 
     $(document).on('click', 'button.completar', function(){
