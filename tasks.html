@@ -9,7 +9,8 @@
     <body>
         <header>
             <div class="logo">&ltto do app&gt</div>
-            <h1 id="title">To do tasks</h1>
+            <div id='user_info'></div>
+            <h2 id="title">To do tasks</h2>
             <p>Ver: <select id="filtro_estado">
                 <option selected>Pendientes</option>
                 <option>Completadas</option>
@@ -27,11 +28,13 @@
                 <label for="act">Actividad</label><br>
                 <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
                 <label for="descripcion">Descripción</label><br>
-                <input id="descripcion" name="descripcion" type="text" required/><br><br>
+                <textarea id="descripcion" name="descripcion" required></textarea><br><br>
                 <label for="categoria">Categoría</label><br>
                 <input id="categoria" name="categoria" type="text" required/><br><br>
                 <label for="prioridad">Prioridad</label><br>
                 <input id="prioridad" max="10" min="1" name="prioridad" type="number" placeholder="valor entre 1 y 10" required/><br><br>
+                <label for="fecha">Fecha límite</label><br>
+                <input id="fecha" name="fecha" type="date" required/><br><br>
                 <input id="btn_crear" name="crear" type="submit" value="Crear"/>
             </form>
             <!--<button id="hid">↑</button>-->
@@ -46,7 +49,23 @@
     <script>
 $(document).ready(function(){
 
-
+    function currentUser(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'current_user.php', true);
+        xhr.onload = function(){
+            if (this.status==200){
+                var user = JSON.parse(this.responseText);
+                console.log(user.id)
+            $('#user_info').html(
+                '<p class="datos">Usuario: '+user.usuario+'. ID:'+user.id+'</p>'+
+                '<h1>Bienvenidx '+user.nombre+' '+user.apellido+'.</h1>'
+            );
+            }
+        }
+        xhr.send()
+    }
+    currentUser();
+    
     $("#new").on("click", function(){
         if($(this).html()== "↓"){
             $("#task-form").css("display", "block");
@@ -57,7 +76,7 @@ $(document).ready(function(){
             $("#task-form").css("display", "none");
             $(this).html("↓");
             $('html,body').animate({
-                scrollTop: $("#filtro_estado").offset().top},'slow');
+                scrollTop: $("#user_info").offset().top},'slow');
         }
     
     })
@@ -109,9 +128,11 @@ $(document).ready(function(){
 
         var act = document.getElementById('act').value;
         var descripcion = document.getElementById('descripcion').value;
+        var categoria = document.getElementById('categoria').value;
         var prioridad = document.getElementById('prioridad').value;
+        var fecha = document.getElementById('fecha').value;
         
-        var data = 'act='+act+'&descripcion='+descripcion+'&prioridad='+prioridad;
+        var data = 'act='+act+'&descripcion='+descripcion+'&categoria='+categoria+'&prioridad='+prioridad+'&fecha='+fecha;
 
         xhr.open('POST', 'new_task.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -121,6 +142,12 @@ $(document).ready(function(){
         }
         xhr.send(data);
         loadTasks();
+
+        $('#act').val('');
+        $('#descripcion').val('');
+        $('#categoria').val('');
+        $('#prioridad').val('');
+        $('#fecha').val('');
     }
 
     $(document).on('click', 'button.completar', function(){

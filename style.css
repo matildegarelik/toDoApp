@@ -18,15 +18,17 @@ div#to-do{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    margin: 5px;
 }
 #to-do > .task{
     border: solid;
     margin:auto;
-    flex: 20%;
+    flex: 30%;
     padding: 10px;
     background-color:whitesmoke;
     color: burlywood;
     height: 250px;
+    padding: 5px;
 }
 .task > h2{
     text-align: center;
@@ -58,4 +60,7 @@ span.irrelev{
     color: white;
     background-color: black;
     padding-left: 5px;
+}
+#user_info > .datos{
+    text-align: right;
 }
