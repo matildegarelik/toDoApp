@@ -1,5 +1,10 @@
+body{
+    margin: 20px;
+    padding: 25px;
+}
+
 .logo{
-    background-color: blueviolet;
+    background-color: rgb(177, 226, 43);
     font-family: monospace;
     font-size: 30px;
     text-align: center;
@@ -9,10 +14,36 @@ footer p{
     text-align: center;
     font-family:cursive;
 }
-.task{
-    border: solid;
+div#to-do{
     display: flex;
     flex-wrap: wrap;
-    background-color: brown;
+    flex-direction: row;
+}
+#to-do > .task{
+    border: solid;
+    margin:auto;
+    flex: 20%;
+    padding: 10px;
+    background-color: blue;
     color: burlywood;
+}
+span.imp{
+    border: solid red;
+    background-color: red;
+    color: white;
+}
+span.medio{
+    border: solid yellow;
+    background-color: yellow;
+    color: white;
+}
+span.irrelev{
+    border: solid green;
+    background-color: green;
+    color: white;
+}
+#error{
+    font-family: monospace;
+    color: red;
+    background: rgba(255, 0, 0, 0.2);
 }

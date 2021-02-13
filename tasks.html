@@ -1,30 +1,38 @@
 <html>
     <head>
         <title>toDoApp - Main page</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href=".\style.css">
         <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
     </head>
     <body>
         <header>
             <div class="logo">&ltto do app&gt</div>
-            <h1>To do tasks</h1>
+            <h1 id="title">To do tasks</h1>
+            <p>Ver <select id="filtro_estado">
+                <option selected>Pendientes</option>
+                <option>Completadas</option>
+                <option>Todas</option>
+            </select></p>
         </header>
         <div id="to-do">
             
         </div>
-        <button id="new">Agrega una nueva actividad</button>
+        <h2>Agrega una nueva actividad<button id="new">↓</button></h2>
         <div id="task-form" style="display: none">
             <form method="POST">
                 <label for="act">Actividad</label><br>
                 <input id="act" name="act" type="text" placeholder="e.g. Hacer las compras" required/><br><br>
                 <label for="descripcion">Descripción</label><br>
                 <input id="descripcion" name="descripcion" type="text"/><br><br>
+                <label for="categoria">Categoría</label><br>
+                <input id="categoria" name="categoria" type="text"/><br><br>
                 <label for="prioridad">Prioridad</label><br>
                 <input id="prioridad" name="prioridad" type="number" placeholder="valor entre 1 y 10" required/><br><br>
                 <input id="btn_crear" name="crear" type="submit" value="Crear"/>
             </form>
-            <button id="hid">↑</button>
+            <!--<button id="hid">↑</button>-->
         </div>
         <div>
             <a href="login.php">Cerrar sesión</a></p>
@@ -34,32 +42,55 @@
         </footer>
     </body>
     <script>
+$(document).ready(function(){
+
+
     $("#new").on("click", function(){
-    $("#task-form").css("display", "block");
+        if($(this).html()== "↓"){
+            $("#task-form").css("display", "block");
+            $(this).html("↑");
+            $('html,body').animate({
+                scrollTop: $("#new").offset().top}, 'slow');
+        }else{
+            $("#task-form").css("display", "none");
+            $(this).html("↓");
+            $('html,body').animate({
+                scrollTop: $("#filtro_estado").offset().top},'slow');
+        }
+    
     })
-
-    $("#hid").on("click", function(){
-        $("#task-form").css('display', 'none');
-    })
-
+    
     function loadTasks(){
+        var filtro_estado = $('select#filtro_estado').val();
+        console.log(filtro_estado);
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'existing_tasks.php', true);
+        xhr.open('GET', 'existing_tasks.php?filtro_estado='+filtro_estado, true);
         xhr.onload = function(){
             if (this.status==200){
                 console.log(this.responseText);
                 var tasks = JSON.parse(this.responseText);
                 var output= '';
                 for (var i in tasks){
+                    var pr = tasks[i].prioridad;
+                    var span_class = "";
+                    if(pr>7){
+                        span_class = "imp";
+                    }else if (pr>4){
+                        span_class = "medio";
+                    }else{
+                        span_class = "irrelev";
+                    }
                     output += '<div class="task">' +
-                        '<h2>'+tasks[i].actividad+'</h2><ul>' +
-                        '<li>Descripcion: '+tasks[i].descripcion+'</li>' +
-                        '<li>Prioridad: '+tasks[i].prioridad+'</li>' +
-                        '<li>Fecha: '+tasks[i].fecha+'</li>' +
-                        '<li>Estado: '+tasks[i].estado+'</li>' +
-                        '</ul></div>';
+                        '<h2>'+tasks[i].actividad+'</h2>' +
+                        '<p><span class='+span_class+'>'+ pr + 
+                        '</span> - '+tasks[i].fecha+' - ' + tasks[i].estado+
+                        '<p>'+tasks[i].descripcion+'</p>';
+                    if (tasks[i].estado =='Pendiente'){
+                        output += '<button class="completar" id='+tasks[i].id+'>Marcar como completada</button>'
+                    }    
+                    output+='</div>';
                 }
-                document.getElementById('to-do').innerHTML= output;
+                $('#to-do').html(output);
             }
         }
         xhr.send()
@@ -69,24 +100,46 @@
     $('#btn_crear').on('click',  postTask)
 
     function postTask(e){
-            e.preventDefault();
+        e.preventDefault();
+        var xhr = new XMLHttpRequest();
+
+        var act = document.getElementById('act').value;
+        var descripcion = document.getElementById('descripcion').value;
+        var prioridad = document.getElementById('prioridad').value;
+        
+        var data = 'act='+act+'&descripcion='+descripcion+'&prioridad='+prioridad;
+
+        xhr.open('POST', 'new_task.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        
+        xhr.onload = function(){
+            console.log(this.responseText);
+        }
+        xhr.send(data);
+        loadTasks();
+    }
+
+    $(document).on('click', 'button.completar', function(){
+        console.log($(this).attr('class'));
+        if ($(this).attr('class')=="completar"){
+            console.log('clicked');
+            var task_id = $(this).attr('id');
             var xhr = new XMLHttpRequest();
-
-            var act = document.getElementById('act').value;
-            var descripcion = document.getElementById('descripcion').value;
-            var prioridad = document.getElementById('prioridad').value;
-            
-            var data = 'act='+act+'&descripcion='+descripcion+'&prioridad='+prioridad;
-
-            xhr.open('POST', 'new_task.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            
+            xhr.open('GET', 'completed_task.php?task_id='+task_id, true);
             xhr.onload = function(){
+            if (this.status==200){
                 console.log(this.responseText);
+                }
             }
-            xhr.send(data);
+            xhr.send();
             loadTasks();
         }
+    });
 
+    $('select#filtro_estado').change(function(){
+        loadTasks();
+    })
+})
+        
     </script>
 </html>

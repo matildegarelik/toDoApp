@@ -15,11 +15,12 @@ echo $usuario_id;
 if(isset($_POST['act'])&&isset($_POST['descripcion'])&&isset($_POST['prioridad'])){
     $act = mysqli_real_escape_string($conexion, $_POST['act']);
     $descripcion = mysqli_real_escape_string($conexion, $_POST['descripcion']);
+    $categoria = mysqli_real_escape_string($conexion, $_POST['categoria']);
     $prioridad = mysqli_real_escape_string($conexion, $_POST['prioridad']);
     $fecha = mysqli_real_escape_string($conexion, date('d-m-y h:i:s'));
     $estado = mysqli_real_escape_string($conexion, 'Pendiente');
 
-    $query = "INSERT INTO actividades(usuario, actividad, descripcion, prioridad, fecha, estado) VALUES('$usuario_id','$act','$descripcion','$prioridad','$fecha','$estado')";
+    $query = "INSERT INTO actividades(usuario, actividad, descripcion, categoría, prioridad, fecha, estado) VALUES('$usuario_id','$act','$descripcion', '$categoria','$prioridad','$fecha','$estado')";
 
     if(mysqli_query($conexion, $query)){
         echo 'Actividad añadida...';
